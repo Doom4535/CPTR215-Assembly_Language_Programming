@@ -1,0 +1,574 @@
+HW #10
+Ch. 7
+1.)
+	a.)
+	;-------------------------------------------------------------------------------
+	; MSP430 Assembler Code Template for use with TI Code Composer Studio
+	;
+	;
+	;-------------------------------------------------------------------------------
+        	    .cdecls C,LIST,"msp430.h"       ; Include device header file
+
+	;-------------------------------------------------------------------------------
+        	    .def    RESET                   ; Export program entry-point to
+                                            ; make it known to linker.
+	;-------------------------------------------------------------------------------
+	            .text                           ; Assemble into program memory.
+	            .retain                         ; Override ELF conditional linking
+	                                            ; and retain current section.
+	            .retainrefs                     ; And retain any sections that have
+                                            ; references to current section.
+
+	;-------------------------------------------------------------------------------
+	RESET       mov.w   #__STACK_END,SP         ; Initialize stackpointer
+	StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
+	
+	
+	;-------------------------------------------------------------------------------
+	; Main loop here
+	;-------------------------------------------------------------------------------
+	Mainloop:			; this code may not work with the msp430 because of the memory range used? (works with non given values; however, using book values)
+				mov.w #0x4001,R4		; setting R4 to 4001h
+				mov.w #0x0F18,&0x02F0	; setting a value in memory
+				add.w R4,&0x02F0	; adding R4 with &02F0h
+				jmp   Mainloop
+	
+	
+	;-------------------------------------------------------------------------------
+	; Stack Pointer definition
+	;-------------------------------------------------------------------------------
+	            .global __STACK_END
+	            .sect   .stack
+	
+	;-------------------------------------------------------------------------------
+	; Interrupt Vectors
+	;-------------------------------------------------------------------------------
+	            .sect   ".reset"                ; MSP430 RESET Vector
+	            .short  RESET
+
+	b.)
+	;-------------------------------------------------------------------------------
+	; MSP430 Assembler Code Template for use with TI Code Composer Studio
+	;
+	;
+	;-------------------------------------------------------------------------------
+        	    .cdecls C,LIST,"msp430.h"       ; Include device header file
+	
+	;-------------------------------------------------------------------------------
+	            .def    RESET                   ; Export program entry-point to
+	                                            ; make it known to linker.
+	;-------------------------------------------------------------------------------
+	            .text                           ; Assemble into program memory.
+	            .retain                         ; Override ELF conditional linking
+	                                            ; and retain current section.
+	            .retainrefs                     ; And retain any sections that have
+	                                            ; references to current section.
+	
+	;-------------------------------------------------------------------------------
+	RESET       mov.w   #__STACK_END,SP         ; Initialize stackpointer
+	StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
+	
+	
+	;-------------------------------------------------------------------------------
+	; Main loop here
+	;-------------------------------------------------------------------------------
+	Mainloop:			; this code may not work with the msp430f5529 because of the memory range used? (works with non given values; however, using book requested values)
+				mov.w #4001h,R4		; setting R4 to 4001h
+				mov.w #0F18h,&02F0h	; setting a value in memory
+				add.w R4,&02F0h	; adding R4 with &02F0h
+				mov.w R4, R6
+				inv   R6			; taking ones complement
+				jmp   Mainloop
+	
+	
+	;-------------------------------------------------------------------------------
+	; Stack Pointer definition
+	;-------------------------------------------------------------------------------
+	            .global __STACK_END
+	            .sect   .stack
+	
+	;-------------------------------------------------------------------------------
+	; Interrupt Vectors
+	;-------------------------------------------------------------------------------
+	            .sect   ".reset"                ; MSP430 RESET Vector
+	            .short  RESET
+	
+	c.)
+	;-------------------------------------------------------------------------------
+	; MSP430 Assembler Code Template for use with TI Code Composer Studio
+	;
+	;
+	;-------------------------------------------------------------------------------
+        	    .cdecls C,LIST,"msp430.h"       ; Include device header file
+
+	;-------------------------------------------------------------------------------
+        	    .def    RESET                   ; Export program entry-point to
+        	                                    ; make it known to linker.
+	;-------------------------------------------------------------------------------
+	            .text                           ; Assemble into program memory.
+	            .retain                         ; Override ELF conditional linking
+	                                            ; and retain current section.
+	            .retainrefs                     ; And retain any sections that have
+	                                            ; references to current section.
+	
+	;-------------------------------------------------------------------------------
+	RESET       mov.w   #__STACK_END,SP         ; Initialize stackpointer
+	StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
+	
+	
+	;-------------------------------------------------------------------------------
+	; Main loop here
+	;-------------------------------------------------------------------------------
+	Mainloop:			; this code may not work with the msp430 because of the memory range used? (works with non given values; however, using book values)
+				mov.w #4001h,R4		; setting R4 to 4001h
+				mov.w #0x0F18,&0x02F0	; setting a value in memory
+				add.w R4,&0x02F0	; adding R4 with &02F0h
+				mov &0x02F0,R6 	; taking ones complement
+				mov.w R4,R12	;
+				swpb R12		; need to swap the last two digits with the first 2 (little endian like) (not sure if this works?)
+				jmp   Mainloop
+	
+	
+	;-------------------------------------------------------------------------------
+	; Stack Pointer definition
+	;-------------------------------------------------------------------------------
+	            .global __STACK_END
+	            .sect   .stack
+	
+	;-------------------------------------------------------------------------------
+	; Interrupt Vectors
+	;-------------------------------------------------------------------------------
+	            .sect   ".reset"                ; MSP430 RESET Vector
+	            .short  RESET
+
+2.)
+	;-------------------------------------------------------------------------------
+	; MSP430 Assembler Code Template for use with TI Code Composer Studio
+	;
+	;
+	;-------------------------------------------------------------------------------
+	            .cdecls C,LIST,"msp430.h"       ; Include device header file
+	
+	;-------------------------------------------------------------------------------
+	            .def    RESET                   ; Export program entry-point to
+	                                            ; make it known to linker.
+	;-------------------------------------------------------------------------------
+	            .text                           ; Assemble into program memory.
+	            .retain                         ; Override ELF conditional linking
+	                                            ; and retain current section.
+	            .retainrefs                     ; And retain any sections that have
+	                                            ; references to current section.
+	
+	;-------------------------------------------------------------------------------
+	RESET       mov.w   #__STACK_END,SP         ; Initialize stackpointer
+	StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
+		
+	
+	;-------------------------------------------------------------------------------
+	; Main loop here
+	;-------------------------------------------------------------------------------
+	
+	Mainloop:
+				mov.w #0x0002,R5  ; setting R5 to 2
+				mov.w #0x0003,R6	; setting R6 to 3
+				jmp   Mainloop
+	
+	;-------------------------------------------------------------------------------
+	; Stack Pointer definition
+	;-------------------------------------------------------------------------------
+	            .global __STACK_END
+	            .sect   .stack
+	
+	;-------------------------------------------------------------------------------
+	; Interrupt Vectors
+	;-------------------------------------------------------------------------------
+	            .sect   ".reset"                ; MSP430 RESET Vector
+	            .short  RESET
+
+
+	b.)
+	;-------------------------------------------------------------------------------
+	; MSP430 Assembler Code Template for use with TI Code Composer Studio
+	;
+	;
+	;-------------------------------------------------------------------------------
+	            .cdecls C,LIST,"msp430.h"       ; Include device header file
+	
+		;-------------------------------------------------------------------------------
+	            .def    RESET                   ; Export program entry-point to
+	                                            ; make it known to linker.
+	;-------------------------------------------------------------------------------
+	            .text                           ; Assemble into program memory.
+	            .retain                         ; Override ELF conditional linking
+	                                            ; and retain current section.
+	            .retainrefs                     ; And retain any sections that have
+	                                            ; references to current section.
+	
+	;-------------------------------------------------------------------------------
+	RESET       mov.w   #__STACK_END,SP         ; Initialize stackpointer
+	StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
+	
+	
+	;-------------------------------------------------------------------------------
+	; Main loop here
+	;-------------------------------------------------------------------------------
+	
+	Mainloop:
+				mov.w #0x7FFF,R5  ; setting R5 to 2
+					mov.w #0x0503,R6	; setting R6 to 3
+					add.w R5,R6 		; adding R5 to R6
+				jmp   Mainloop
+	
+	;-------------------------------------------------------------------------------
+		; Stack Pointer definition
+	;-------------------------------------------------------------------------------
+	            .global __STACK_END
+	            .sect   .stack
+	
+	;-------------------------------------------------------------------------------
+	; Interrupt Vectors
+	;-------------------------------------------------------------------------------
+	            .sect   ".reset"                ; MSP430 RESET Vector
+	            .short  RESET
+
+	c.)
+	;-------------------------------------------------------------------------------
+	; MSP430 Assembler Code Template for use with TI Code Composer Studio
+	;
+	;
+	;-------------------------------------------------------------------------------
+	            .cdecls C,LIST,"msp430.h"       ; Include device header file
+	
+	;-------------------------------------------------------------------------------
+	            .def    RESET                   ; Export program entry-point to
+	                                            ; make it known to linker.
+	;-------------------------------------------------------------------------------
+	            .text                           ; Assemble into program memory.
+	            .retain                         ; Override ELF conditional linking
+	                                            ; and retain current section.
+	            .retainrefs                     ; And retain any sections that have
+	                                            ; references to current section.
+	
+	;-------------------------------------------------------------------------------
+	RESET       mov.w   #__STACK_END,SP         ; Initialize stackpointer
+	StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
+	
+	
+	;-------------------------------------------------------------------------------
+	; Main loop here
+	;-------------------------------------------------------------------------------
+	
+	Mainloop:
+				mov.w #0x0FAF,R5  ; setting R5
+				mov.w #0x0053,R6	; setting R6
+				add.w R5,R6 		; adding R5 to R6
+				jmp   Mainloop
+	
+	;-------------------------------------------------------------------------------
+	; Stack Pointer definition
+	;-------------------------------------------------------------------------------
+	            .global __STACK_END
+	            .sect   .stack
+	
+	;-------------------------------------------------------------------------------
+	; Interrupt Vectors
+	;-------------------------------------------------------------------------------
+	            .sect   ".reset"                ; MSP430 RESET Vector
+	            .short  RESET
+
+3.)
+	a.)
+	;-------------------------------------------------------------------------------
+	; MSP430 Assembler Code Template for use with TI Code Composer Studio
+	;
+	;
+	;-------------------------------------------------------------------------------
+	            .cdecls C,LIST,"msp430.h"       ; Include device header file
+	
+	;-------------------------------------------------------------------------------
+	            .def    RESET                   ; Export program entry-point to
+	                                            ; make it known to linker.
+	;-------------------------------------------------------------------------------
+	            .text                           ; Assemble into program memory.
+	            .retain                         ; Override ELF conditional linking
+	                                            ; and retain current section.
+	            .retainrefs                     ; And retain any sections that have
+	                                            ; references to current section.
+	
+	;-------------------------------------------------------------------------------
+	RESET       mov.w   #__STACK_END,SP         ; Initialize stackpointer
+	StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
+	
+	
+	;-------------------------------------------------------------------------------
+	; Main loop here
+	;-------------------------------------------------------------------------------
+	
+	
+	Mainloop:
+				mov.w #0x0002,R5  ; setting R5 to 2
+				mov.w #0x0003,R6	; setting R6 to 3
+				jmp   Mainloop
+	
+	;-------------------------------------------------------------------------------
+	; Stack Pointer definition
+	;-------------------------------------------------------------------------------
+	            .global __STACK_END
+	            .sect   .stack
+	
+	;-------------------------------------------------------------------------------
+	; Interrupt Vectors
+	;-------------------------------------------------------------------------------
+	            .sect   ".reset"                ; MSP430 RESET Vector
+	            .short  RESET
+            
+	b.)
+	;-------------------------------------------------------------------------------
+	; MSP430 Assembler Code Template for use with TI Code Composer Studio
+	;
+	;
+	;-------------------------------------------------------------------------------
+	            .cdecls C,LIST,"msp430.h"       ; Include device header file
+	
+	;-------------------------------------------------------------------------------
+	            .def    RESET                   ; Export program entry-point to
+	                                            ; make it known to linker.
+	;-------------------------------------------------------------------------------
+	            .text                           ; Assemble into program memory.
+	            .retain                         ; Override ELF conditional linking
+	                                            ; and retain current section.
+	            .retainrefs                     ; And retain any sections that have
+	                                            ; references to current section.
+	
+	;-------------------------------------------------------------------------------
+	RESET       mov.w   #__STACK_END,SP         ; Initialize stackpointer
+	StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
+	
+	
+	;-------------------------------------------------------------------------------
+	; Main loop here
+	;-------------------------------------------------------------------------------
+	
+	
+	Mainloop:		; this code causes an overflow
+				mov.w #0x7FFF,R5  ; setting R5
+				mov.w #0x8800,R6	; setting R6
+				sub.w R5,R6 		; subtracting R5 from R6
+				jmp   Mainloop
+	
+	;-------------------------------------------------------------------------------
+	; Stack Pointer definition
+	;-------------------------------------------------------------------------------
+	            .global __STACK_END
+	            .sect   .stack
+	
+	;-------------------------------------------------------------------------------
+	; Interrupt Vectors
+	;-------------------------------------------------------------------------------
+	            .sect   ".reset"                ; MSP430 RESET Vector
+	            .short  RESET
+
+	c.)
+	;-------------------------------------------------------------------------------
+	; MSP430 Assembler Code Template for use with TI Code Composer Studio
+	;
+	;
+	;-------------------------------------------------------------------------------
+	            .cdecls C,LIST,"msp430.h"       ; Include device header file
+	
+	;-------------------------------------------------------------------------------
+	            .def    RESET                   ; Export program entry-point to
+	                                            ; make it known to linker.
+	;-------------------------------------------------------------------------------
+	            .text                           ; Assemble into program memory.
+	            .retain                         ; Override ELF conditional linking
+	                                            ; and retain current section.
+	            .retainrefs                     ; And retain any sections that have
+	                                            ; references to current section.
+	
+	;-------------------------------------------------------------------------------
+	RESET       mov.w   #__STACK_END,SP         ; Initialize stackpointer
+	StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
+	
+	
+	;-------------------------------------------------------------------------------
+	; Main loop here
+	;-------------------------------------------------------------------------------
+	
+	
+	Mainloop:		; this code does not cause an overflow
+				mov.w #0x0002,R5  ; setting R5
+				mov.w #0x0005,R6	; setting R6
+				sub.w R5,R6 		; subtracting R5 from R6
+				jmp   Mainloop
+	
+	;-------------------------------------------------------------------------------
+	; Stack Pointer definition
+	;-------------------------------------------------------------------------------
+	            .global __STACK_END
+	            .sect   .stack
+	
+	;-------------------------------------------------------------------------------
+	; Interrupt Vectors
+	;-------------------------------------------------------------------------------
+	            .sect   ".reset"                ; MSP430 RESET Vector
+	            .short  RESET
+
+4.)
+	a.)
+	;-------------------------------------------------------------------------------
+	; MSP430 Assembler Code Template for use with TI Code Composer Studio
+	;
+	;
+	;-------------------------------------------------------------------------------
+	            .cdecls C,LIST,"msp430.h"       ; Include device header file
+	            
+	;-------------------------------------------------------------------------------
+	            .def    RESET                   ; Export program entry-point to
+	                                            ; make it known to linker.
+	;-------------------------------------------------------------------------------
+	            .text                           ; Assemble into program memory.
+	            .retain                         ; Override ELF conditional linking
+	                                            ; and retain current section.
+	            .retainrefs                     ; And retain any sections that have
+	                                            ; references to current section.
+	
+	;-------------------------------------------------------------------------------
+	RESET       mov.w   #__STACK_END,SP         ; Initialize stackpointer
+	StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
+	
+	
+	;-------------------------------------------------------------------------------
+	; Main loop here
+	;-------------------------------------------------------------------------------
+	
+	Mainloop:						; This code jumps to the label Greater if the result is greater than zero
+	Greater:
+				mov.w #0x0005,R5  	; setting R5
+				mov.w #0x0001,R6	; setting R6
+				add.w R5,R6 		; adding R5 to R6
+				cmp   #0001,R6		; comparing the value at R6 to 1 (want greater than 0, and jge is greater
+									; than or equal to zero (removing the zero case)
+				jge   Greater		; jumping to the label greater if the result greater than or equal to zero
+	
+	
+	;-------------------------------------------------------------------------------
+	; Stack Pointer definition
+	;-------------------------------------------------------------------------------
+	            .global __STACK_END
+	            .sect   .stack
+	            
+	;-------------------------------------------------------------------------------
+	; Interrupt Vectors
+	;-------------------------------------------------------------------------------
+	            .sect   ".reset"                ; MSP430 RESET Vector
+	            .short  RESET
+            
+	b.)
+	;-------------------------------------------------------------------------------
+	; MSP430 Assembler Code Template for use with TI Code Composer Studio
+	;
+	;
+	;-------------------------------------------------------------------------------
+	            .cdecls C,LIST,"msp430.h"       ; Include device header file
+	            
+	;-------------------------------------------------------------------------------
+	            .def    RESET                   ; Export program entry-point to
+	                                            ; make it known to linker.
+	;-------------------------------------------------------------------------------
+	            .text                           ; Assemble into program memory.
+	            .retain                         ; Override ELF conditional linking
+	                                            ; and retain current section.
+	            .retainrefs                     ; And retain any sections that have
+	                                            ; references to current section.
+	
+	;-------------------------------------------------------------------------------
+	RESET       mov.w   #__STACK_END,SP         ; Initialize stackpointer
+	StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
+	
+	
+	;-------------------------------------------------------------------------------
+	; Main loop here
+	;-------------------------------------------------------------------------------
+	
+	Mainloop:						; This code jumps to the label Greater if the result is greater than zero
+	Greater:
+				mov.w #0x0005,R5  	; setting R5
+				mov.w #0x0001,R6	; setting R6
+				add.w R5,R6 		; adding R5 to R6
+				cmp   #0001,R6		; comparing the value at R6 to 1 (want greater than 0, and jge is greater
+									; than or equal to zero (removing the zero case)
+				jge   Greater		; jumping to the label greater if the result greater than or equal to zero
+	
+	
+	;-------------------------------------------------------------------------------
+	; Stack Pointer definition
+	;-------------------------------------------------------------------------------
+	            .global __STACK_END
+	            .sect   .stack
+	            
+	;-------------------------------------------------------------------------------
+	; Interrupt Vectors
+	;-------------------------------------------------------------------------------
+	            .sect   ".reset"                ; MSP430 RESET Vector
+	            .short  RESET
+            
+5.)
+	;-------------------------------------------------------------------------------
+	; MSP430 Assembler Code Template for use with TI Code Composer Studio
+	;
+	;
+	;-------------------------------------------------------------------------------
+	            .cdecls C,LIST,"msp430.h"       ; Include device header file
+	
+	;-------------------------------------------------------------------------------
+	            .def    RESET                   ; Export program entry-point to
+	                                            ; make it known to linker.
+	;-------------------------------------------------------------------------------
+	            .text                           ; Assemble into program memory.
+	            .retain                         ; Override ELF conditional linking
+	                                            ; and retain current section.
+	            .retainrefs                     ; And retain any sections that have
+	                                            ; references to current section.
+	
+	;-------------------------------------------------------------------------------
+	RESET       mov.w   #__STACK_END,SP         ; Initialize stackpointer
+	StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
+	
+	
+	;-------------------------------------------------------------------------------
+	; Main loop here
+	;-------------------------------------------------------------------------------
+	
+	Mainloop:		; this program combines 7.5 parts a and b (no seperate 7.5-a and 7.5-b)
+			mov.w   P1IN,R9			; moves the input from port p1 into register r9
+	
+			mov.w   R9,R8			; copying r9 to r8
+			rla     R8				; rolling left one (this is a binary shift (so it is moving 1 bit (1 or 0), not hex, character)
+			mov.w	#0x0000,R5		; moving 0 to r5 so that cmp can be used differently
+			;mov.w   #0x0001,R8      ; used to debug (this creates a negative, the pin (at least during developement)
+									 ; was giving a negative number, which then subtracted from zero always skipped
+									 ; the loop
+			cmp     R8,R5			; comparing 0 to r8 ( 0 - r8), this way jl can be used to avoid the zero case
+									; remember cmp is src,dst (which does dst - src)
+			jl		less			; jumping to the less loop (a little missleading since the arithmetic is backwards)
+			jmp		end				; preventing the default of contining the program (only go to the less section
+									; if the less condition is met, there for jumping to the end)
+	
+	less:
+			mov.w	#0xFFFF,R10		; moving 0xFFFF to r10 if jl conditions met (see above)
+	
+	end:
+	
+	;-------------------------------------------------------------------------------
+	; Stack Pointer definition
+	;-------------------------------------------------------------------------------
+	            .global __STACK_END
+	            .sect   .stack
+	
+	;-------------------------------------------------------------------------------
+	; Interrupt Vectors
+	;-------------------------------------------------------------------------------
+	            .sect   ".reset"                ; MSP430 RESET Vector
+	            .short  RESET
+			
